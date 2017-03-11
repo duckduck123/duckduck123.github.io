@@ -3,13 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>misterge Blog</title>
+  <title>zookeeper选举算法源码分析 | misterge Blog</title>
   <meta name="author" content="Mister Ge">
+  
+  <meta name="description" content="This class has been deprecated as of release 3.4.0选举类public class LeaderElection implements Election  {
+
+    private static final Logger LOG = 
+
+    L">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  
+  <meta property="og:title" content="zookeeper选举算法源码分析"/>
   <meta property="og:site_name" content="misterge Blog"/>
 
   
@@ -43,41 +49,7 @@
 <div class="clearfix"></div>
 </header>
   <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-11T18:17:59.000Z"><a href="/2017/03/12/Hexo-github-blog/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/Hexo-github-blog/">Hexo+github搭建个人博客</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h4 id="Hexo-是一款基于Node-js、快速、简洁且高效的博客框架。Hexo-使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页，Nodejs框架是基于V8的引擎，是目前速度最快的Javascript引擎，GitHub-Pages本用于介绍托管在GitHub的项目，-不过，由于他的空间免费稳定，可用来做搭建一个博客。"><a href="#Hexo-是一款基于Node-js、快速、简洁且高效的博客框架。Hexo-使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页，Nodejs框架是基于V8的引擎，是目前速度最快的Javascript引擎，GitHub-Pages本用于介绍托管在GitHub的项目，-不过，由于他的空间免费稳定，可用来做搭建一个博客。" class="headerlink" title="Hexo 是一款基于Node.js、快速、简洁且高效的博客框架。Hexo 使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页，Nodejs框架是基于V8的引擎，是目前速度最快的Javascript引擎，GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，可用来做搭建一个博客。"></a>Hexo 是一款基于Node.js、快速、简洁且高效的博客框架。Hexo 使用Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页，Nodejs框架是基于V8的引擎，是目前速度最快的Javascript引擎，GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，可用来做搭建一个博客。</h4><h3 id="接下来进入教程"><a href="#接下来进入教程" class="headerlink" title="接下来进入教程"></a>接下来进入教程</h3><h4 id="1、环境配置"><a href="#1、环境配置" class="headerlink" title="1、环境配置"></a>1、环境配置</h4><h5 id="node-js-环境配置-https-nodejs-org-en-download"><a href="#node-js-环境配置-https-nodejs-org-en-download" class="headerlink" title="node.js   环境配置 https://nodejs.org/en/download/"></a>node.js   环境配置 <a href="https://nodejs.org/en/download/" target="_blank" rel="external">https://nodejs.org/en/download/</a></h5><h5 id="git-环境配置-https-git-scm-com"><a href="#git-环境配置-https-git-scm-com" class="headerlink" title="git       环境配置 https://git-scm.com/"></a>git       环境配置 <a href="https://git-scm.com/" target="_blank" rel="external">https://git-scm.com/</a></h5><h6 id="软件安装一直下一步即可"><a href="#软件安装一直下一步即可" class="headerlink" title="软件安装一直下一步即可"></a>软件安装一直下一步即可</h6><h4 id="2、安装hexo"><a href="#2、安装hexo" class="headerlink" title="2、安装hexo"></a>2、安装hexo</h4><h6 id="C-Users-XYuser-gt-d"><a href="#C-Users-XYuser-gt-d" class="headerlink" title="C:\Users\XYuser&gt;d:"></a>C:\Users\XYuser&gt;d:</h6><h6 id="D-cd-D-Program-Files-nodejs-进入nodejs安装目录"><a href="#D-cd-D-Program-Files-nodejs-进入nodejs安装目录" class="headerlink" title="D:>cd D:\Program Files\nodejs  //进入nodejs安装目录"></a>D:>cd D:\Program Files\nodejs  //进入nodejs安装目录</h6><h6 id="D-Program-Files-nodejs-gt-npm-install-g-hexo"><a href="#D-Program-Files-nodejs-gt-npm-install-g-hexo" class="headerlink" title="D:\Program Files\nodejs&gt;npm install -g hexo"></a>D:\Program Files\nodejs&gt;npm install -g hexo</h6><h6 id="稍等几分钟就安装好了……"><a href="#稍等几分钟就安装好了……" class="headerlink" title="稍等几分钟就安装好了……"></a>稍等几分钟就安装好了……</h6><h6 id="D-Program-Files-nodejs-gt-mkdir-myblog-在nodejs安装目录创建你的博客名称"><a href="#D-Program-Files-nodejs-gt-mkdir-myblog-在nodejs安装目录创建你的博客名称" class="headerlink" title="D:\Program Files\nodejs&gt;mkdir myblog //在nodejs安装目录创建你的博客名称"></a>D:\Program Files\nodejs&gt;mkdir myblog //在nodejs安装目录创建你的博客名称</h6><h6 id="D-Program-Files-nodejs-gt-cd-myblog"><a href="#D-Program-Files-nodejs-gt-cd-myblog" class="headerlink" title="D:\Program Files\nodejs&gt;cd myblog"></a>D:\Program Files\nodejs&gt;cd myblog</h6><h6 id="D-Program-Files-nodejs-myblog-gt-hexo-init-初始化"><a href="#D-Program-Files-nodejs-myblog-gt-hexo-init-初始化" class="headerlink" title="D:\Program Files\nodejs\myblog&gt;hexo init //初始化"></a>D:\Program Files\nodejs\myblog&gt;hexo init //初始化</h6><h6 id="D-Program-Files-nodejs-myblog-gt-npm-install-安装依赖包"><a href="#D-Program-Files-nodejs-myblog-gt-npm-install-安装依赖包" class="headerlink" title="D:\Program Files\nodejs\myblog&gt;npm install //安装依赖包"></a>D:\Program Files\nodejs\myblog&gt;npm install //安装依赖包</h6><h6 id="D-Program-Files-nodejs-myblog-gt-hexo-g-生成静态页面"><a href="#D-Program-Files-nodejs-myblog-gt-hexo-g-生成静态页面" class="headerlink" title="D:\Program Files\nodejs\myblog&gt;hexo g //生成静态页面"></a>D:\Program Files\nodejs\myblog&gt;hexo g //生成静态页面</h6><h6 id="D-Program-Files-nodejs-myblog-gt-hexo-s-启动"><a href="#D-Program-Files-nodejs-myblog-gt-hexo-s-启动" class="headerlink" title="D:\Program Files\nodejs\myblog&gt;hexo s //启动"></a>D:\Program Files\nodejs\myblog&gt;hexo s //启动</h6><h6 id="你的博客已经搭建完成访问http-localhost-4000即可看到你的博客"><a href="#你的博客已经搭建完成访问http-localhost-4000即可看到你的博客" class="headerlink" title="你的博客已经搭建完成访问http://localhost:4000即可看到你的博客"></a>你的博客已经搭建完成访问<a href="http://localhost:4000即可看到你的博客" target="_blank" rel="external">http://localhost:4000即可看到你的博客</a></h6><h4 id="接下来在github上创建自己的主页"><a href="#接下来在github上创建自己的主页" class="headerlink" title="接下来在github上创建自己的主页"></a>接下来在github上创建自己的主页</h4><h6 id="……后续"><a href="#……后续" class="headerlink" title="……后续"></a>……后续</h6><p><img src="http://img.blog.csdn.net/20160907182518474" alt="Alt text"></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
   
   <div class="post-content">
     <header>
@@ -87,7 +59,7 @@
       
       
   
-    <h1 class="title"><a href="/2017/01/12/github-pages-个人博客/">zookeeper选举算法源码分析</a></h1>
+    <h1 class="title">zookeeper选举算法源码分析</h1>
   
 
     </header>
@@ -404,6 +376,29 @@
       
         
         
+  
+  <div class="tags">
+    <a href="/tags/zookeeper/">zookeeper</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
       
       <div class="clearfix"></div>
     </footer>
@@ -411,14 +406,27 @@
 </article>
 
 
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
 
-
-
-<nav id="pagination">
   
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://www.geyangyang.com/2017/01/12/github-pages-个人博客/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
   
-  <div class="clearfix"></div>
-</nav></div></div>
+</section>
+
+</div></div>
     <aside id="sidebar" class="alignright">
   <div class="search">
   <form action="//google.com/search" method="get" accept-charset="utf-8">
